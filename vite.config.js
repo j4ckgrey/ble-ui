@@ -1,5 +1,5 @@
+// vite.config.ts
 import { fileURLToPath, URL } from "url";
-
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
@@ -12,22 +12,26 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       manifest: {
-        name: "Bluetooth Nametag App",
-        short_name: "BLEApp",
+        name: "Ink!",
+        short_name: "Ink!",
+        description: "A minimalist Bluetooth Nametag app for E-ink display",
         start_url: ".",
+        scope: "/",
         display: "standalone",
-        background_color: "#1f2937",
+        background_color: "#1a202c",
         theme_color: "#2563eb",
+        lang: "en",
         icons: [
           {
-            src: "icon-192.png",
+            src: "icons/icon-192x192.png",
             sizes: "192x192",
             type: "image/png",
           },
           {
-            src: "icon-512.png",
+            src: "icons/icon-512x512.png",
             sizes: "512x512",
             type: "image/png",
+            purpose: "any maskable",
           },
         ],
       },
@@ -40,25 +44,5 @@ export default defineConfig({
   },
   server: {
     host: true,
-  },
-  manifest: {
-    name: "My BLE React App",
-    short_name: "BLEApp",
-    start_url: ".",
-    display: "standalone",
-    background_color: "#1a202c",
-    theme_color: "#2563eb",
-    icons: [
-      {
-        src: "pwa-192x192.png",
-        sizes: "192x192",
-        type: "image/png",
-      },
-      {
-        src: "pwa-512x512.png",
-        sizes: "512x512",
-        type: "image/png",
-      },
-    ],
   },
 });
