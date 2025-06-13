@@ -459,119 +459,130 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center text-white">
-      {!showForm ? (
-        <>
-          <p className="text-lg mb-6">
-            {status === "Idle" ? "🔍 Click to scan for nearby devices" : status}
-          </p>
-          {!connected && (
-            <button onClick={startScan} disabled={isScanning || connected}>
-              {isScanning ? "Scanning..." : "Connect to Device"}
-            </button>
-          )}
-        </>
-      ) : (
-        <main className="w-full max-w-4xl bg-gray-800 p-8 rounded-lg shadow-lg mx-4">
-          <h1 className="text-4xl font-bold mb-8 text-center">Nametag Info</h1>
-          <div>
-            <label className="block mb-1 font-semibold" htmlFor="fullName">
-              Full Name
-            </label>
-            <input
-              className="mb-4 p-3 border rounded-md w-full bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Full Name"
-              value={fields.fullName}
-              onChange={(e) => handleChange("fullName", e.target.value)}
-            />
-          </div>
-          <div>
-            <label className="block mb-1 font-semibold" htmlFor="occupation">
-              Occupation
-            </label>
-            <input
-              className="mb-4 p-3 border rounded-md w-full bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Occupation / Job / Student"
-              value={fields.occupation}
-              onChange={(e) => handleChange("occupation", e.target.value)}
-            />
-          </div>
-          <div>
-            <label className="block mb-1 font-semibold" htmlFor="email">
-              Email Address
-            </label>
-            <input
-              className="mb-4 p-3 border rounded-md w-full bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              type="email"
-              placeholder="Email Address"
-              value={fields.email}
-              onChange={(e) => handleChange("email", e.target.value)}
-            />
-          </div>
-          <div>
-            <label className="block mb-1 font-semibold" htmlFor="phone">
-              Phone Number
-            </label>
-            <input
-              className="mb-4 p-3 border rounded-md w-full bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Phone Number"
-              value={fields.phone}
-              onChange={(e) => handleChange("phone", e.target.value)}
-            />
-          </div>
-          <div>
-            <label className="block mb-1 font-semibold" htmlFor="qr">
-              QRCode (Personal Page, Github, LinkedIn, Email Address)
-            </label>
-            <div className="flex w-full mb-4">
-              <span className="pr-4 text-gray-400 select-none flex-shrink-0 flex items-center">
-                https://
-              </span>
+    <>
+      <div className="flex justify-center pt-20 pb-2">
+        <img
+          src="../public/logo.png"
+          alt="Ink! Logo"
+          className="w-40 h-40 rounded-full shadow-lg border border-gray-300 bg-white"
+        />
+      </div>
+      <div className="min-h-screen w-full flex flex-col items-center justify-center text-white">
+        {!showForm ? (
+          <>
+            <p className="text-lg mb-6">
+              {status === "Idle"
+                ? "🔍 Click to scan for nearby devices"
+                : status}
+            </p>
+            {!connected && (
+              <button onClick={startScan} disabled={isScanning || connected}>
+                {isScanning ? "Scanning..." : "Connect to Device"}
+              </button>
+            )}
+          </>
+        ) : (
+          <main className="w-full max-w-4xl bg-gray-800 p-8 rounded-lg shadow-lg mx-4">
+            <h1 className="text-4xl font-bold mb-8 text-center">Ink!</h1>
+            <div>
+              <label className="block mb-1 font-semibold" htmlFor="fullName">
+                Full Name
+              </label>
               <input
-                className="flex-grow p-3 border rounded-r-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="yourpage.com"
-                value={fields.qr.replace(/^https?:\/\//, "")}
-                onChange={(e) =>
-                  handleChange(
-                    "qr",
-                    "https://" + e.target.value.replace(/^https?:\/\//, "")
-                  )
-                }
+                className="mb-4 p-3 border rounded-md w-full bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Full Name"
+                value={fields.fullName}
+                onChange={(e) => handleChange("fullName", e.target.value)}
               />
             </div>
-          </div>
-          <button onClick={confirmAndSend} className="btn-send">
-            Send
+            <div>
+              <label className="block mb-1 font-semibold" htmlFor="occupation">
+                Occupation
+              </label>
+              <input
+                className="mb-4 p-3 border rounded-md w-full bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Occupation / Job / Student"
+                value={fields.occupation}
+                onChange={(e) => handleChange("occupation", e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block mb-1 font-semibold" htmlFor="email">
+                Email Address
+              </label>
+              <input
+                className="mb-4 p-3 border rounded-md w-full bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                type="email"
+                placeholder="Email Address"
+                value={fields.email}
+                onChange={(e) => handleChange("email", e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block mb-1 font-semibold" htmlFor="phone">
+                Phone Number
+              </label>
+              <input
+                className="mb-4 p-3 border rounded-md w-full bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Phone Number"
+                value={fields.phone}
+                onChange={(e) => handleChange("phone", e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block mb-1 font-semibold" htmlFor="qr">
+                QRCode (Personal Page, Github, LinkedIn, Email Address)
+              </label>
+              <div className="flex w-full mb-4">
+                <span className="pr-4 text-gray-400 select-none flex-shrink-0 flex items-center">
+                  https://
+                </span>
+                <input
+                  className="flex-grow p-3 border rounded-r-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="yourpage.com"
+                  value={fields.qr.replace(/^https?:\/\//, "")}
+                  onChange={(e) =>
+                    handleChange(
+                      "qr",
+                      "https://" + e.target.value.replace(/^https?:\/\//, "")
+                    )
+                  }
+                />
+              </div>
+            </div>
+            <button onClick={confirmAndSend} className="btn-send">
+              Send
+            </button>
+          </main>
+        )}
+
+        {/* Device picker modal */}
+        {isScanning && !showForm && (
+          <DevicePicker
+            devices={availableDevices}
+            onSelect={selectDevice}
+            onCancel={cancelScan}
+          />
+        )}
+
+        {/* Notifications */}
+        {notification && (
+          <Notification
+            type={notification.type}
+            message={notification.message}
+            onConfirm={notification.onConfirm}
+            onCancel={notification.onCancel}
+          />
+        )}
+        {deferredPrompt && (
+          <button
+            onClick={handleInstallClick}
+            className="fixed bottom-4 right-4 px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-600"
+          >
+            Install App
           </button>
-        </main>
-      )}
-
-      {/* Device picker modal */}
-      {isScanning && !showForm && (
-        <DevicePicker
-          devices={availableDevices}
-          onSelect={selectDevice}
-          onCancel={cancelScan}
-        />
-      )}
-
-      {/* Notifications */}
-      {notification && (
-        <Notification
-          type={notification.type}
-          message={notification.message}
-          onConfirm={notification.onConfirm}
-          onCancel={notification.onCancel}
-        />
-      )}
-      {deferredPrompt && (
-        <button
-          onClick={handleInstallClick}
-          className="fixed bottom-4 right-4 px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-600"
-        >
-          Install App
-        </button>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }
