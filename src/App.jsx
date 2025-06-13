@@ -378,12 +378,21 @@ export default function App() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const urlRegex = /^https:\/\/[\w.-]+\.[a-z]{2,}(\/[\w\/.-]*)?$/i;
 
+    const fullNameValid = fields.fullName.trim() !== "";
+    const occupationValid = fields.occupation.trim() !== "";
+    const emailValid = emailRegex.test(fields.email.trim());
+    const phoneValid = fields.phone.trim() !== "";
+
+    const qrValue = fields.qr.trim();
+    const qrIsEmail = emailRegex.test(qrValue);
+    const qrIsUrl = urlRegex.test(qrValue);
+
     return (
-      fields.fullName.trim() !== "" &&
-      fields.occupation.trim() !== "" &&
-      emailRegex.test(fields.email) &&
-      fields.phone.trim() !== "" &&
-      urlRegex.test(fields.qr)
+      fullNameValid &&
+      occupationValid &&
+      emailValid &&
+      phoneValid &&
+      (qrIsEmail || qrIsUrl)
     );
   };
 
@@ -420,13 +429,23 @@ export default function App() {
             CHARACTERISTIC_UUID
           );
 
-          const domainLabel = extractDomainLabel(fields.qr);
+          const qrValue = fields.qr.trim();
+          const qrIsEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(qrValue);
+
+          const qrToSend = qrIsEmail
+            ? qrValue.replace(/^https?:\/\//, "")
+            : qrValue;
+
+          const domainLabel = qrIsEmail
+            ? "Email"
+            : extractDomainLabel(qrToSend);
+
           const fullString = [
             fields.fullName,
             fields.occupation,
             fields.email,
             fields.phone,
-            fields.qr,
+            qrToSend,
             domainLabel,
           ].join("|");
 
@@ -460,7 +479,7 @@ export default function App() {
 
   return (
     <>
-      <div className="flex justify-center pb-2">
+      <div className="flex justify-center p-10">
         <img
           src="/logo.png"
           alt="Ink! Logo"
@@ -539,17 +558,19 @@ export default function App() {
                 </span>
                 <input
                   className="flex-grow p-3 border rounded-r-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="yourpage.com"
-                  value={fields.qr.replace(/^https?:\/\//, "")}
+                  placeholder="yourpage.com or email@example.com"
+                  value={
+                    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.qr)
+                      ? fields.qr
+                      : fields.qr.replace(/^https?:\/\//, "")
+                  }
                   onChange={(e) => {
                     const val = e.target.value.trim();
                     const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
 
                     if (isEmail) {
-                      // Email: send as is, no https
                       handleChange("qr", val);
                     } else {
-                      // URL: prepend https://, removing existing protocol if any
                       handleChange(
                         "qr",
                         "https://" + val.replace(/^https?:\/\//, "")
