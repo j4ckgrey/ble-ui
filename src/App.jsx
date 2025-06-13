@@ -537,22 +537,26 @@ export default function App() {
                 <span className="pr-4 text-gray-400 select-none flex-shrink-0 flex items-center">
                   https://
                 </span>
-                onChange=
-                {(e) => {
-                  const val = e.target.value.trim();
-                  const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+                <input
+                  className="flex-grow p-3 border rounded-r-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="yourpage.com"
+                  value={fields.qr.replace(/^https?:\/\//, "")}
+                  onChange={(e) => {
+                    const val = e.target.value.trim();
+                    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
 
-                  if (isEmail) {
-                    // Email: send as is, no https
-                    handleChange("qr", val);
-                  } else {
-                    // URL: prepend https://, removing existing protocol if any
-                    handleChange(
-                      "qr",
-                      "https://" + val.replace(/^https?:\/\//, "")
-                    );
-                  }
-                }}
+                    if (isEmail) {
+                      // Email: send as is, no https
+                      handleChange("qr", val);
+                    } else {
+                      // URL: prepend https://, removing existing protocol if any
+                      handleChange(
+                        "qr",
+                        "https://" + val.replace(/^https?:\/\//, "")
+                      );
+                    }
+                  }}
+                />
               </div>
             </div>
             <button onClick={confirmAndSend} className="btn-send">
