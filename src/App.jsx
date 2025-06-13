@@ -462,7 +462,7 @@ export default function App() {
     <>
       <div className="flex justify-center pt-20 pb-2">
         <img
-          src="../public/logo.png"
+          src="/logo.png"
           alt="Ink! Logo"
           className="w-40 h-40 rounded-full shadow-lg border border-gray-300 bg-white"
         />
