@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+/* Plugins */
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+/* Class based dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #111827; /* Tailwind gray-900 */
+}
+
+:root {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+/* Button base style */
+button {
+  @apply rounded-lg border border-transparent px-6 py-2 text-base font-medium cursor-pointer transition;
+  background-color: #3b82f6; /* Tailwind blue-500 */
+  color: white;
+}
+
+button:hover {
+  background-color: #2563eb; /* Tailwind blue-600 */
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+  outline-offset: 2px;
+}
