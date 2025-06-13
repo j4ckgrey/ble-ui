@@ -486,7 +486,7 @@ export default function App() {
           className="w-40 h-40 rounded-full shadow-lg border border-gray-300 bg-white"
         />
       </div>
-      <div className="w-full flex flex-col items-center justify-center text-white">
+      <div className="w-full flex flex-col items-center justify-center text-white my-5">
         {!showForm ? (
           <>
             <p className="text-lg mb-6 mt-6">
