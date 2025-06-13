@@ -460,17 +460,17 @@ export default function App() {
 
   return (
     <>
-      <div className="flex justify-center pt-20 pb-2">
+      <div className="flex justify-center pb-2">
         <img
           src="/logo.png"
           alt="Ink! Logo"
           className="w-40 h-40 rounded-full shadow-lg border border-gray-300 bg-white"
         />
       </div>
-      <div className="min-h-screen w-full flex flex-col items-center justify-center text-white">
+      <div className="w-full flex flex-col items-center justify-center text-white">
         {!showForm ? (
           <>
-            <p className="text-lg mb-6">
+            <p className="text-lg mb-6 mt-6">
               {status === "Idle"
                 ? "🔍 Click to scan for nearby devices"
                 : status}
@@ -537,17 +537,22 @@ export default function App() {
                 <span className="pr-4 text-gray-400 select-none flex-shrink-0 flex items-center">
                   https://
                 </span>
-                <input
-                  className="flex-grow p-3 border rounded-r-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="yourpage.com"
-                  value={fields.qr.replace(/^https?:\/\//, "")}
-                  onChange={(e) =>
+                onChange=
+                {(e) => {
+                  const val = e.target.value.trim();
+                  const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+
+                  if (isEmail) {
+                    // Email: send as is, no https
+                    handleChange("qr", val);
+                  } else {
+                    // URL: prepend https://, removing existing protocol if any
                     handleChange(
                       "qr",
-                      "https://" + e.target.value.replace(/^https?:\/\//, "")
-                    )
+                      "https://" + val.replace(/^https?:\/\//, "")
+                    );
                   }
-                />
+                }}
               </div>
             </div>
             <button onClick={confirmAndSend} className="btn-send">
