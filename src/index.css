@@ -41,3 +41,13 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
   outline-offset: 2px;
 }
+
+select {
+  background-color: #2a2a2a; /* dark background matching app */
+  color: #f0f0f0; /* light font color */
+  border: 1px solid #555; /* subtle border */
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-family: "YourAppFont", sans-serif;
+  font-size: 14px;
+}

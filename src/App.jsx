@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import FontSelector from "./components/FontSelector.jsx";
 
 const SERVICE_UUID = "8f0d8818-7af1-4f6c-8a12-83b1fff3ce1b";
 const CHARACTERISTIC_UUID = "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d";
@@ -70,7 +71,7 @@ export default function App() {
     occupation: "",
     email: "",
     phone: "",
-    qr: "",
+    font: "Helvetica Regular",
   });
   const [showForm, setShowForm] = useState(false);
   const [status, setStatus] = useState("Idle");
@@ -376,23 +377,15 @@ export default function App() {
 
   const validateInputs = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const urlRegex = /^https:\/\/[\w.-]+\.[a-z]{2,}(\/[\w\/.-]*)?$/i;
 
     const fullNameValid = fields.fullName.trim() !== "";
     const occupationValid = fields.occupation.trim() !== "";
     const emailValid = emailRegex.test(fields.email.trim());
     const phoneValid = fields.phone.trim() !== "";
-
-    const qrValue = fields.qr.trim();
-    const qrIsEmail = emailRegex.test(qrValue);
-    const qrIsUrl = urlRegex.test(qrValue);
+    const fontValid = fields.font !== "";
 
     return (
-      fullNameValid &&
-      occupationValid &&
-      emailValid &&
-      phoneValid &&
-      (qrIsEmail || qrIsUrl)
+      fullNameValid && occupationValid && emailValid && phoneValid && fontValid
     );
   };
 
@@ -429,24 +422,12 @@ export default function App() {
             CHARACTERISTIC_UUID
           );
 
-          const qrValue = fields.qr.trim();
-          const qrIsEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(qrValue);
-
-          const qrToSend = qrIsEmail
-            ? qrValue.replace(/^https?:\/\//, "")
-            : qrValue;
-
-          const domainLabel = qrIsEmail
-            ? "Email"
-            : extractDomainLabel(qrToSend);
-
           const fullString = [
             fields.fullName,
             fields.occupation,
             fields.email,
             fields.phone,
-            qrToSend,
-            domainLabel,
+            fields.font,
           ].join("|");
 
           const encoder = new TextEncoder();
@@ -463,7 +444,7 @@ export default function App() {
             occupation: "",
             email: "",
             phone: "",
-            qr: "",
+            font: "",
           });
         } catch (err) {
           setNotification({
@@ -537,6 +518,7 @@ export default function App() {
                 onChange={(e) => handleChange("email", e.target.value)}
               />
             </div>
+
             <div>
               <label className="block mb-1 font-semibold" htmlFor="phone">
                 Phone Number
@@ -548,37 +530,8 @@ export default function App() {
                 onChange={(e) => handleChange("phone", e.target.value)}
               />
             </div>
-            <div>
-              <label className="block mb-1 font-semibold" htmlFor="qr">
-                QRCode (Personal Page, Github, LinkedIn, Email Address)
-              </label>
-              <div className="flex w-full mb-4">
-                <span className="pr-4 text-gray-400 select-none flex-shrink-0 flex items-center">
-                  https://
-                </span>
-                <input
-                  className="flex-grow p-3 border rounded-r-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="yourpage.com or email@example.com"
-                  value={
-                    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.qr)
-                      ? fields.qr
-                      : fields.qr.replace(/^https?:\/\//, "")
-                  }
-                  onChange={(e) => {
-                    const val = e.target.value.trim();
-                    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
-
-                    if (isEmail) {
-                      handleChange("qr", val);
-                    } else {
-                      handleChange(
-                        "qr",
-                        "https://" + val.replace(/^https?:\/\//, "")
-                      );
-                    }
-                  }}
-                />
-              </div>
+            <div className="pb-5">
+              <FontSelector fields={fields} setFields={setFields} />
             </div>
             <button onClick={confirmAndSend} className="btn-send">
               Send
