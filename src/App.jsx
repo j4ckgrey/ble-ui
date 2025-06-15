@@ -28,9 +28,7 @@ function DevicePicker({ devices, onSelect, onCancel }) {
           </ul>
         )}
         <div className="flex justify-center mt-6">
-          <button onClick={onCancel} className="btn-cancel">
-            Cancel
-          </button>
+          <button onClick={onCancel}>Cancel</button>
         </div>
       </div>
     </div>
@@ -43,20 +41,8 @@ function Notification({ type, message, onConfirm, onCancel }) {
       <div className="bg-gray-900 text-white rounded-lg p-6 shadow-xl max-w-sm w-full relative z-50">
         <p className="mb-4 text-center">{message}</p>
         <div className="flex justify-center space-x-4">
-          {onCancel && (
-            <button
-              onClick={onCancel}
-              className="rounded-lg border border-transparent px-6 py-2 bg-gray-800 hover:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-600"
-            >
-              Cancel
-            </button>
-          )}
-          <button
-            onClick={onConfirm}
-            className="rounded-lg px-6 py-2 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-600"
-          >
-            OK
-          </button>
+          {onCancel && <button onClick={onCancel}>Cancel</button>}
+          <button onClick={onConfirm}>OK</button>
         </div>
       </div>
     </div>
@@ -71,7 +57,7 @@ export default function App() {
     occupation: "",
     email: "",
     phone: "",
-    font: "Helvetica Regular",
+    font: "",
   });
   const [showForm, setShowForm] = useState(false);
   const [status, setStatus] = useState("Idle");
@@ -224,12 +210,7 @@ export default function App() {
               </p>
               {flagsLink && (
                 <div className="mt-4 flex justify-center">
-                  <button
-                    onClick={learnMoreButton}
-                    className="rounded px-4 py-2 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    Open Flags Page
-                  </button>
+                  <button onClick={learnMoreButton}>Open Flags Page</button>
                 </div>
               )}
             </>
@@ -483,7 +464,19 @@ export default function App() {
           </>
         ) : (
           <main className="w-full max-w-4xl bg-gray-800 p-8 rounded-lg shadow-lg mx-4">
-            <h1 className="text-4xl font-bold mb-8 text-center">Ink!</h1>
+            <div className="text-white mb-2">
+              <h1 className="text-4xl font-bold mb-2 text-center">
+                Your <span className="text-red-500">I</span>nfo, Your Tag
+                <span className="text-red-500">!</span>
+              </h1>
+              <p className="text-center text-gray-300 max-w-xl mx-auto border-t border-gray-600 pt-4">
+                Fill in your name, Occupation, and contact information. It will
+                appear on your e-Paper name tag exactly as shown.
+              </p>
+            </div>
+
+            <div className="border-b border-white/30 w-1/2 mx-auto mb-8" />
+
             <div>
               <label className="block mb-1 font-semibold" htmlFor="fullName">
                 Full Name
@@ -530,12 +523,12 @@ export default function App() {
                 onChange={(e) => handleChange("phone", e.target.value)}
               />
             </div>
-            <div className="pb-5">
-              <FontSelector fields={fields} setFields={setFields} />
+            <FontSelector fields={fields} setFields={setFields} />
+            <div className="flex justify-end">
+              <button onClick={confirmAndSend} className="mt-15 w-50">
+                Send
+              </button>
             </div>
-            <button onClick={confirmAndSend} className="btn-send">
-              Send
-            </button>
           </main>
         )}
 
@@ -560,7 +553,7 @@ export default function App() {
         {deferredPrompt && (
           <button
             onClick={handleInstallClick}
-            className="fixed bottom-4 right-4 px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-600"
+            className="fixed bottom-4 right-4 px-4 py-2"
           >
             Install App
           </button>

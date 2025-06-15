@@ -30,6 +30,7 @@ button {
   @apply rounded-lg border border-transparent px-6 py-2 text-base font-medium cursor-pointer transition;
   background-color: #3b82f6; /* Tailwind blue-500 */
   color: white;
+  min-width: 150px;
 }
 
 button:hover {
@@ -42,12 +43,9 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-select {
-  background-color: #2a2a2a; /* dark background matching app */
-  color: #f0f0f0; /* light font color */
-  border: 1px solid #555; /* subtle border */
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-family: "YourAppFont", sans-serif;
-  font-size: 14px;
+input:-webkit-autofill {
+  background-color: #374151 !important; /* Tailwind gray-700 */
+  color: white !important;
+  -webkit-text-fill-color: white !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
