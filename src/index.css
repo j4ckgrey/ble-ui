@@ -43,6 +43,11 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
+.install-btn {
+  background-color: #15803d; /* Tailwind green-700 */
+  color: white;
+}
+
 input:-webkit-autofill {
   background-color: #374151 !important; /* Tailwind gray-700 */
   color: white !important;

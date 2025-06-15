@@ -553,7 +553,7 @@ export default function App() {
         {deferredPrompt && (
           <button
             onClick={handleInstallClick}
-            className="fixed bottom-4 right-4 px-4 py-2 bg-green-700 mt-10"
+            className="fixed bottom-4 left-4 px-4 py-2 install-btn"
           >
             Install App
           </button>
